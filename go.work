@@ -1,0 +1,12 @@
+go 1.24.2
+
+use (
+	./lib/mlcartifact
+	./cmd/artifact-server
+	./cmd/artifact-cli
+	./mcp/wollmilchsau
+	./mcp/memory-server
+	./mcp/task-manager
+	./mcp/d2mcp
+	./mcp/openstreetmap_mcp
+)

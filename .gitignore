@@ -1,0 +1,7 @@
+bin/
+build/
+*.exe
+*.test
+*.out
+.artifacts/
+*.log

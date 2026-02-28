@@ -68,14 +68,10 @@ nfpms:
       - openstreetmap_mcp
       - task-manager
     contents:
-      - src: d2mcp
-        dst: /usr/bin/d2mcp
-      - src: memory-server
-        dst: /usr/bin/memory-server
-      - src: openstreetmap_mcp
-        dst: /usr/bin/openstreetmap_mcp
-      - src: task-manager
-        dst: /usr/bin/task-manager
+      - src: LICENSE
+        dst: /usr/share/doc/mlcgo-mcp-hub/LICENSE
+      - src: README.md
+        dst: /usr/share/doc/mlcgo-mcp-hub/README.md
 
 snapshot:
   name_template: "{{ incpatch .Version }}-next"

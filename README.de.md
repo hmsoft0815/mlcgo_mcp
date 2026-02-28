@@ -20,9 +20,17 @@ Lizenziert unter der MIT-Lizenz.
 
 ---
 
-### Schnell-Installation (Linux/macOS)
+### Komplett-Installation (Empfohlen)
 
-Der schnellste Weg, alle Hub-Server zu installieren:
+Um **alle drei Komponenten** (Hub, Artifact Store und Wollmilchsau) in einem Rutsch zu installieren:
+
+```bash
+curl -sfL https://raw.githubusercontent.com/hmsoft0815/mlcgo_mcp/main/scripts/install-all.sh | sh
+```
+
+### Einzel-Installation (Linux/macOS)
+
+Nur die Hub-Server installieren:
 
 ```bash
 curl -sfL https://raw.githubusercontent.com/hmsoft0815/mlcgo_mcp/main/scripts/install.sh | sh

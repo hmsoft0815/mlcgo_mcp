@@ -5,11 +5,7 @@ version: 2
 
 before:
   hooks:
-    - go mod tidy
-    #- cd mcp/d2mcp && go mod tidy
-    #- cd mcp/memory-server && go mod tidy
-    #- cd mcp/openstreetmap_mcp && go mod tidy
-    #- cd mcp/task-manager && go mod tidy
+    - true # Placeholder, or remove hooks section if not needed
 
 builds:
   - id: d2mcp

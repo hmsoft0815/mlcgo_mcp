@@ -40,7 +40,6 @@ archives:
   - format: tar.gz
     format_overrides:
       - goos: windows
-        format: zip
     name_template: >-
       {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
     files:
@@ -63,6 +62,11 @@ nfpms:
     formats:
       - deb
       - rpm
+    builds:
+      - d2mcp
+      - memory-server
+      - openstreetmap_mcp
+      - task-manager
     contents:
       - src: d2mcp
         dst: /usr/bin/d2mcp

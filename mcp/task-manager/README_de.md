@@ -2,6 +2,11 @@
 
 Ein hochentwickelter State-Management-Server, der es Agenten ermöglicht, eine persistente Checkliste von Zielen und Architekturentscheidungen zu führen.
 
+Achtung: Programme wie claud-code oder gemini-cli etc haben meist
+bereits einen mechanismus für dass was dieses tool löst. 
+Dieser MCP server macht mehr sinn zur integration in chatsystem oder
+andere systeme die keine eigene task-management haben.
+
 ## Kernkonzepte
 
 ### Plan-Modus

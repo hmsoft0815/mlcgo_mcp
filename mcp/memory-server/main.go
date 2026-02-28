@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/mlcmcp/memory-server/internal/handlers"
+	"github.com/hmsoft0815/memory-server/internal/handlers"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )

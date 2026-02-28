@@ -1,4 +1,4 @@
-module github.com/mlcmcp/task-manager
+module github.com/hmsoft0815/task-manager
 
 go 1.24.0
 
@@ -12,3 +12,5 @@ require (
 	golang.org/x/oauth2 v0.34.0 // indirect
 	golang.org/x/tools v0.41.0 // indirect
 )
+
+replace github.com/hmsoft0815/mlcartifact => ../../../mlcartifact

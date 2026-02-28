@@ -8,8 +8,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/mlcmcp/task-manager/internal/db"
-	"github.com/mlcmcp/task-manager/internal/handlers"
+	"github.com/hmsoft0815/task-manager/internal/db"
+	"github.com/hmsoft0815/task-manager/internal/handlers"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )

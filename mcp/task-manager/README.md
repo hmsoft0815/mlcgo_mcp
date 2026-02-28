@@ -4,6 +4,9 @@ Copyright (c) 2026 Michael Lechner. All rights reserved.
 
 A sophisticated state-management server that allows agents to maintain a persistent checklist of objectives and architectural decisions.
 
+CAREFUL: Do not use this tool for simple tasks. It is intended for complex, multi-step tasks that require careful planning and tracking.
+And do not add it to claude desktop etc, as they already have such a tool. 
+
 ## Core Concepts
 
 ### Plan Mode

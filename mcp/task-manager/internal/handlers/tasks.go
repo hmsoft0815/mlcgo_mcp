@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mlcmcp/task-manager/internal/db"
-	"github.com/mlcmcp/task-manager/internal/models"
+	"github.com/hmsoft0815/task-manager/internal/db"
+	"github.com/hmsoft0815/task-manager/internal/models"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )

@@ -1,4 +1,4 @@
-module github.com/mlcmcp/memory-server
+module github.com/hmsoft0815/memory-server
 
 go 1.24.0
 
@@ -24,3 +24,5 @@ require (
 	modernc.org/memory v1.11.0 // indirect
 	modernc.org/sqlite v1.45.0
 )
+
+replace github.com/hmsoft0815/mlcartifact => ../../../mlcartifact

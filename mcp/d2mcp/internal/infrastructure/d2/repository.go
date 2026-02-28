@@ -18,8 +18,8 @@ import (
 	"oss.terrastruct.com/d2/lib/log"
 	"oss.terrastruct.com/d2/lib/textmeasure"
 
-	"github.com/i2y/d2mcp/internal/domain/entity"
-	"github.com/i2y/d2mcp/internal/domain/repository"
+	"github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp/internal/domain/entity"
+	"github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp/internal/domain/repository"
 )
 
 // D2Repository implements the DiagramRepository interface using D2.

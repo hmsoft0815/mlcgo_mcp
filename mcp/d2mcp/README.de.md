@@ -1,8 +1,10 @@
 # d2mcp — D2 Diagramm MCP-Server
 
-Ein spezialisierter **Model Context Protocol (MCP)** Server zum Rendern und Bearbeiten von [D2-Diagrammen](https://d2lang.com/).
+**Hinweis: Dies ist eine modifizierte Version des ursprünglichen [d2mcp](https://github.com/i2y/d2mcp) Projekts von i2y.**  
+Diese Version wurde von Michael Lechner angepasst und erweitert, um in das `mlcgo_mcp` Ökosystem zu passen, wobei der Fokus auf SVG-Ausgabe und die optionale Integration mit dem `mlcartifact` Storage-Service liegt.
 
 Copyright (c) 2026 Michael Lechner. Alle Rechte vorbehalten.
+Ursprüngliches Projekt Copyright (c) 2024 i2y.
 Lizenziert unter der MIT-Lizenz.
 
 ---

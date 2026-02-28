@@ -1,4 +1,4 @@
-module github.com/i2y/d2mcp
+module github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp
 
 go 1.24.2
 

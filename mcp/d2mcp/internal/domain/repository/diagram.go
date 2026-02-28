@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 
-	"github.com/i2y/d2mcp/internal/domain/entity"
+	"github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp/internal/domain/entity"
 )
 
 // DiagramRepository defines the interface for diagram operations.

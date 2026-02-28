@@ -8,7 +8,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 
-	"github.com/i2y/d2mcp/internal/usecase"
+	"github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp/internal/usecase"
 )
 
 // OracleGetHandler handles the d2_oracle_get_info tool.

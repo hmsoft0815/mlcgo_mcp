@@ -13,7 +13,7 @@ before:
 
 builds:
   - id: d2mcp
-    main: ./mcp/d2mcp
+    main: ./mcp/d2mcp/cmd
     binary: d2mcp
     env: [CGO_ENABLED=0]
     goos: [linux, windows, darwin]
@@ -27,7 +27,7 @@ builds:
     goarch: [amd64, arm64]
 
   - id: openstreetmap_mcp
-    main: ./mcp/openstreetmap_mcp
+    main: ./mcp/openstreetmap_mcp/cmd/server
     binary: openstreetmap_mcp
     env: [CGO_ENABLED=0]
     goos: [linux, windows, darwin]

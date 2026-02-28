@@ -1,4 +1,6 @@
-# OpenStreetMap MCP Server (Go)
+# OpenStreetMap MCP Server
+
+Copyright (c) 2026 Michael Lechner. All rights reserved. (Go)
 
 A Model Context Protocol (MCP) server for OpenStreetMap data, providing tools for geocoding, routing, and spatial analysis.
 

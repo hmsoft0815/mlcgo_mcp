@@ -1,5 +1,7 @@
 # Task Manager MCP Server
 
+Copyright (c) 2026 Michael Lechner. All rights reserved.
+
 A sophisticated state-management server that allows agents to maintain a persistent checklist of objectives and architectural decisions.
 
 ## Core Concepts

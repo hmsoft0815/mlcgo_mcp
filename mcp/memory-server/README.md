@@ -1,5 +1,7 @@
 # Memory MCP Server
 
+Copyright (c) 2026 Michael Lechner. All rights reserved.
+
 Provides a persistent knowledge graph based on SQLite to store and retrieve long-term facts and observations.
 
 ## Tools

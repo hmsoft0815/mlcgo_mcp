@@ -73,5 +73,8 @@ nfpms:
       - src: README.md
         dst: /usr/share/doc/mlcgo-mcp-hub/README.md
 
+attest:
+  - artifacts: checksum
+
 snapshot:
   name_template: "{{ incpatch .Version }}-next"

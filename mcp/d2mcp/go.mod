@@ -3,8 +3,8 @@ module github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp
 go 1.24.2
 
 require (
+	github.com/hmsoft0815/mlcartifact v0.1.0
 	github.com/mark3labs/mcp-go v0.32.0
-	github.com/hmsoft0815/mlcartifact v0.0.0-00010101000000-000000000000
 	oss.terrastruct.com/d2 v0.7.0
 )
 
@@ -26,7 +26,6 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/spf13/cast v1.7.1 // indirect
-	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	github.com/yuin/goldmark v1.7.11 // indirect
 	golang.org/x/exp v0.0.0-20251023183803-a4bb9ffd2546 // indirect
@@ -41,5 +40,3 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 	oss.terrastruct.com/util-go v0.0.0-20250213174338-243d8661088a // indirect
 )
-
-

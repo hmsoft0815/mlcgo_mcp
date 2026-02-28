@@ -51,5 +51,27 @@ archives:
 checksum:
   name_template: "checksums.txt"
 
+nfpms:
+  - id: mcp-hub-packages
+    package_name: mlcgo-mcp-hub
+    file_name_template: "{{ .PackageName }}_{{ .Version }}_{{ .Arch }}"
+    vendor: Michael Lechner
+    homepage: https://github.com/hmsoft0815/mlcgo_mcp
+    maintainer: Michael Lechner <michael@mlcgo.eu>
+    description: A collection of high-performance MCP servers for D2, Memory, OSM and Tasks.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+    contents:
+      - src: d2mcp
+        dst: /usr/bin/d2mcp
+      - src: memory-server
+        dst: /usr/bin/memory-server
+      - src: openstreetmap_mcp
+        dst: /usr/bin/openstreetmap_mcp
+      - src: task-manager
+        dst: /usr/bin/task-manager
+
 snapshot:
   name_template: "{{ incpatch .Version }}-next"

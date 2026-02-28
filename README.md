@@ -20,23 +20,45 @@ Licensed under the MIT License.
 
 ---
 
-## 🚀 Getting Started
+### One-Line Installation (Linux/macOS)
 
-### Prerequisites
-- **Go 1.24+**
-- **Task** (optional): `sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d`
+The fastest way to install all hub servers:
 
-### Build All Servers
 ```bash
-# Using Task (recommended)
-task build-all
-
-# Without Task
-go build -o ./bin/d2mcp ./mcp/d2mcp
-go build -o ./bin/memory-server ./mcp/memory-server
-# ... etc
+curl -sfL https://raw.githubusercontent.com/hmsoft0815/mlcgo_mcp/main/scripts/install.sh | sh
 ```
-Binaries will be placed in the `./bin/` directory.
+
+### Pre-built Binaries & Linux Packages
+
+Download the latest version as a **ZIP/TAR**, or install via **.deb** or **.rpm** (for Ubuntu/Debian/Fedora/openSUSE) from the **[GitHub Releases](https://github.com/hmsoft0815/mlcgo_mcp/releases)** page.
+
+---
+
+## Claude Desktop Integration
+
+To use these servers in Claude Desktop, add them to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "d2mcp": {
+      "command": "d2mcp"
+    },
+    "memory-server": {
+      "command": "memory-server"
+    },
+    "openstreetmap": {
+      "command": "openstreetmap_mcp"
+    },
+    "task-manager": {
+      "command": "task-manager"
+    }
+  }
+}
+```
+*Note: If the binaries are not in your PATH, provide the absolute path to the command.*
+
+---
 
 ---
 

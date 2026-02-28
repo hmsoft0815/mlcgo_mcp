@@ -44,6 +44,12 @@ D2 is a modern diagram scripting language that turns text into diagrams. Unlike 
 
 ---
 
+## 📥 Pre-built Binaries
+
+The easiest way to use **d2mcp** is to download the pre-compiled binaries from the **[GitHub Releases](https://github.com/hmsoft0815/mlcgo_mcp/releases)** page. Binaries are available for Windows, Linux, and macOS.
+
+---
+
 ## Installation & Usage
 
 Part of the [mlcgo_mcp](https://github.com/hmsoft0815/mlcgo_mcp) hub.

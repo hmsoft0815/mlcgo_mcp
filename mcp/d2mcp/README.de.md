@@ -44,6 +44,12 @@ D2 ist eine moderne Skriptsprache für Diagramme, die Text in Grafiken verwandel
 
 ---
 
+## 📥 Fertige Binaries
+
+Der einfachste Weg **d2mcp** zu nutzen, ist der Download der vorkompilierten Binaries von der **[GitHub Releases](https://github.com/hmsoft0815/mlcgo_mcp/releases)** Seite. Binaries sind für Windows, Linux und macOS verfügbar.
+
+---
+
 ## Installation & Nutzung
 
 Teil des [mlcgo_mcp](https://github.com/hmsoft0815/mlcgo_mcp) Hubs.

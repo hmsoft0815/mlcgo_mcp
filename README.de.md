@@ -2,6 +2,9 @@
 
 Eine Sammlung von **Model Context Protocol (MCP)** Servern, geschrieben in Go. Dieses Repository dient als zentraler Einstiegspunkt für spezialisierte Tools, die für KI-Agenten entwickelt wurden.
 
+Copyright (c) 2026 Michael Lechner. Alle Rechte vorbehalten.
+Lizenziert unter der MIT-Lizenz.
+
 > 🇬🇧 [English Version](README.md)
 
 ---

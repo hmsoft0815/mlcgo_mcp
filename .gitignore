@@ -1,7 +1,13 @@
 bin/
 build/
+dist/
 *.exe
 *.test
 *.out
 .artifacts/
 *.log
+# Accidental binary name
+osm-mcp
+# Go binaries in subdirs
+**/bin/*
+**/osm-mcp

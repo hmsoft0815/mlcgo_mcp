@@ -1,0 +1,59 @@
+version: 2
+
+# GoReleaser config for mlcgo_mcp Hub
+# This will build all 4 nested MCP servers.
+
+before:
+  hooks:
+    - go mod tidy
+    #- cd mcp/d2mcp && go mod tidy
+    #- cd mcp/memory-server && go mod tidy
+    #- cd mcp/openstreetmap_mcp && go mod tidy
+    #- cd mcp/task-manager && go mod tidy
+
+builds:
+  - id: d2mcp
+    main: ./mcp/d2mcp
+    binary: d2mcp
+    env: [CGO_ENABLED=0]
+    goos: [linux, windows, darwin]
+    goarch: [amd64, arm64]
+
+  - id: memory-server
+    main: ./mcp/memory-server
+    binary: memory-server
+    env: [CGO_ENABLED=0]
+    goos: [linux, windows, darwin]
+    goarch: [amd64, arm64]
+
+  - id: openstreetmap_mcp
+    main: ./mcp/openstreetmap_mcp
+    binary: openstreetmap_mcp
+    env: [CGO_ENABLED=0]
+    goos: [linux, windows, darwin]
+    goarch: [amd64, arm64]
+
+  - id: task-manager
+    main: ./mcp/task-manager
+    binary: task-manager
+    env: [CGO_ENABLED=0]
+    goos: [linux, windows, darwin]
+    goarch: [amd64, arm64]
+
+archives:
+  - format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    files:
+      - LICENSE
+      - README.md
+      - README.de.md
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"

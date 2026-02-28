@@ -37,9 +37,10 @@ builds:
     goarch: [amd64, arm64]
 
 archives:
-  - format: tar.gz
+  - formats: [tar.gz]
     format_overrides:
       - goos: windows
+        formats: [zip]
     name_template: >-
       {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
     files:
@@ -62,7 +63,7 @@ nfpms:
     formats:
       - deb
       - rpm
-    builds:
+    ids:
       - d2mcp
       - memory-server
       - openstreetmap_mcp
@@ -74,4 +75,4 @@ nfpms:
         dst: /usr/share/doc/mlcgo-mcp-hub/README.md
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  version_template: "{{ incpatch .Version }}-next"

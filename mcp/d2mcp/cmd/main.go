@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"time"
@@ -99,6 +98,34 @@ func main() {
 		Stateless:         stateless,
 	})
 
+	srv.RegisterTool(mcptypes.NewTool("d2__list_layouts__mlc",
+		mcptypes.WithDescription("List available D2 layout engines"),
+	), func(ctx context.Context, request mcptypes.CallToolRequest) (*mcptypes.CallToolResult, error) {
+		return &mcptypes.CallToolResult{
+			Content: []mcptypes.Content{
+				mcptypes.TextContent{Text: "Available layouts: dagre (default), elk, d2, tala"},
+			},
+		}, nil
+	})
+
+	srv.AddPrompt(mcptypes.NewPrompt("d2__diagram_generation__mlc",
+		mcptypes.WithPromptDescription("Expert assistance in designing and generating complex D2 architecture diagrams."),
+		mcptypes.WithArgument("requirement", mcptypes.ArgumentDescription("The architectural requirement to visualize"), mcptypes.RequiredArgument()),
+	), func(ctx context.Context, request mcptypes.GetPromptRequest) (*mcptypes.GetPromptResult, error) {
+		requirement := request.Params.Arguments["requirement"]
+		return &mcptypes.GetPromptResult{
+			Description: "Software architect D2 design session",
+			Messages: []mcptypes.PromptMessage{
+				{
+					Role: mcptypes.RoleUser,
+					Content: mcptypes.TextContent{
+						Text: "You are a software architect. Design a D2 diagram that represents the following requirement: '" + requirement + "'. Use best practices for visual layout, clear labeling, and logical grouping. Output the D2 code and explain the architectural choices made.",
+					},
+				},
+			},
+		}, nil
+	})
+
 	// Register all tools.
 	tools := buildToolRegistrations(diagramUseCase, oracleUseCase)
 	for _, t := range tools {
@@ -117,10 +144,12 @@ func main() {
 // configureLogging sets up the log output based on transport mode.
 // In stdio mode, logs go to a file to avoid interfering with stdio communication.
 func configureLogging(transport, addr string) {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	if transport == "stdio" {
 		logFile, err := os.OpenFile("/tmp/d2mcp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 		if err != nil {
-			log.SetOutput(io.Discard)
+			log.SetOutput(os.Stderr)
+			log.Printf("Warning: Failed to open log file, using stderr: %v", err)
 		} else {
 			log.SetOutput(logFile)
 		}

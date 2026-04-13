@@ -83,6 +83,11 @@ func (s *Server) RegisterTool(tool mcp.Tool, handler server.ToolHandlerFunc) err
 	return nil
 }
 
+// AddPrompt registers a prompt with the MCP server.
+func (s *Server) AddPrompt(prompt mcp.Prompt, handler server.PromptHandlerFunc) {
+	s.mcpServer.AddPrompt(prompt, handler)
+}
+
 // Start starts the MCP server with the configured transport.
 func (s *Server) Start(ctx context.Context) error {
 	switch s.transport {

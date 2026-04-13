@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -10,19 +9,36 @@ import (
 	"path/filepath"
 
 	"github.com/hmsoft0815/memory-server/internal/handlers"
-
-	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"github.com/mark3labs/mcp-go/mcp"
+	"github.com/mark3labs/mcp-go/server"
 )
 
-func main() {
-	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: memory-server [options]\n")
-		fmt.Fprintf(os.Stderr, "Options:\n")
-		flag.PrintDefaults()
-	}
+type MemorizeArgs struct {
+	Entity      string `json:"entity" jsonschema:"description=The name of the thing (e.g. 'Oly' or 'Project')"`
+	Category    string `json:"category,omitempty" jsonschema:"description=Category (e.g. 'Person', 'Setting')"`
+	Observation string `json:"observation" jsonschema:"description=The actual fact to remember"`
+}
 
-	dump := flag.Bool("dump", false, "Dump tool definitions as JSON and exit")
+type SearchNodesArgs struct {
+	Query string `json:"query" jsonschema:"description=The search term"`
+}
+
+type ReadGraphArgs struct{}
+
+func main() {
+	// Ensure logging is on stderr for MCP protocol safety
+	log.SetOutput(os.Stderr)
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
+	v := flag.Bool("version", false, "Print version and exit")
+	transportType := flag.String("transport", "stdio", "Transport type (stdio or sse)")
+	addr := flag.String("addr", ":3000", "SSE address (if transport=sse)")
 	flag.Parse()
+
+	if *v {
+		fmt.Println("memory-server 1.2.0")
+		return
+	}
 
 	home, _ := os.UserHomeDir()
 	dbDir := filepath.Join(home, ".local", "share", "mcp-proxy")
@@ -34,93 +50,104 @@ func main() {
 		log.Fatalf("Failed to initialize SQLite: %v", err)
 	}
 
-	server := mcp.NewServer(&mcp.Implementation{
-		Name:    "memory-server",
-		Version: "1.1.2",
-	}, nil)
+	// Initialize the MCP server
+	s := server.NewMCPServer("memory-server", "1.2.0")
 
-	// FLAT TOOLS - Maximum compatibility
-	tools := []mcp.Tool{
-		{
-			Name:        "memory__memorize__mlc",
-			Description: "Store a new fact or observation about an entity",
-			InputSchema: map[string]interface{}{
-				"type": "object",
-				"properties": map[string]interface{}{
-					"entity":      map[string]interface{}{"type": "string", "description": "The name of the thing (e.g. 'Oly' or 'Project')"},
-					"category":    map[string]interface{}{"type": "string", "description": "Category (e.g. 'Person', 'Setting')"},
-					"observation": map[string]interface{}{"type": "string", "description": "The actual fact to remember"},
-				},
-				"required":             []string{"entity", "observation"},
-			},
-		},
-		{
-			Name:        "memory__search_nodes__mlc",
-			Description: "Search for stored facts in the knowledge graph",
-			InputSchema: map[string]interface{}{
-				"type": "object",
-				"properties": map[string]interface{}{
-					"query": map[string]interface{}{"type": "string", "description": "The search term"},
-				},
-				"required":             []string{"query"},
-			},
-		},
-		{
-			Name:        "memory__read_graph__mlc",
-			Description: "Read all stored memories",
-			InputSchema: map[string]interface{}{
-				"type":                 "object",
-				"properties":           map[string]interface{}{},
-			},
-		},
-	}
+	// Register tools
+	registerTools(s, handler)
 
-	textResult := func(text string) *mcp.CallToolResult {
-		return &mcp.CallToolResult{
-			Content: []mcp.Content{
-				&mcp.TextContent{Text: text},
-			},
+	// Run the server
+	runServer(s, *transportType, *addr)
+}
+
+func registerTools(s *server.MCPServer, handler *handlers.MemoryHandler) {
+	s.AddTool(mcp.NewTool("memory__memorize__mlc",
+		mcp.WithDescription("Store a new fact or observation about an entity"),
+		mcp.WithInputSchema[MemorizeArgs](),
+	), func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		var args MemorizeArgs
+		if err := request.BindArguments(&args); err != nil {
+			return nil, err
 		}
-	}
-
-	// Simplified Handlers
-	mcp.AddTool(server, &tools[0], func(ctx context.Context, req *mcp.CallToolRequest, args map[string]interface{}) (*mcp.CallToolResult, any, error) {
-		entity, _ := args["entity"].(string)
-		entType, _ := args["category"].(string)
-		obs, _ := args["observation"].(string)
 
 		hArgs := map[string]interface{}{
 			"entities": []interface{}{
 				map[string]interface{}{
-					"name": entity,
-					"entityType": entType,
-					"observations": []interface{}{obs},
+					"name":         args.Entity,
+					"entityType":   args.Category,
+					"observations": []interface{}{args.Observation},
 				},
 			},
 		}
 		res, err := handler.CreateEntities(hArgs)
-		if err != nil { return nil, nil, err }
-		return textResult(res.(string)), nil, nil
+		if err != nil {
+			return nil, err
+		}
+		return mcp.NewToolResultText(res.(string)), nil
 	})
 
-	mcp.AddTool(server, &tools[1], func(ctx context.Context, req *mcp.CallToolRequest, args map[string]interface{}) (*mcp.CallToolResult, any, error) {
-		res, err := handler.SearchNodes(args)
-		if err != nil { return nil, nil, err }
-		return textResult(res.(string)), nil, nil
+	s.AddTool(mcp.NewTool("memory__search_nodes__mlc",
+		mcp.WithDescription("Search for stored facts in the knowledge graph"),
+		mcp.WithInputSchema[SearchNodesArgs](),
+	), func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		var args SearchNodesArgs
+		if err := request.BindArguments(&args); err != nil {
+			return nil, err
+		}
+
+		hArgs := map[string]interface{}{
+			"query": args.Query,
+		}
+		res, err := handler.SearchNodes(hArgs)
+		if err != nil {
+			return nil, err
+		}
+		return mcp.NewToolResultText(res.(string)), nil
 	})
 
-	mcp.AddTool(server, &tools[2], func(ctx context.Context, req *mcp.CallToolRequest, args map[string]interface{}) (*mcp.CallToolResult, any, error) {
-		res, err := handler.ReadGraph(args)
-		if err != nil { return nil, nil, err }
-		return textResult(res.(string)), nil, nil
+	s.AddTool(mcp.NewTool("memory__read_graph__mlc",
+		mcp.WithDescription("Read the entire knowledge graph"),
+	), func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		res, err := handler.ReadGraph(map[string]interface{}{})
+		if err != nil {
+			return nil, err
+		}
+		return mcp.NewToolResultText(res.(string)), nil
 	})
 
-	if *dump {
-		json.NewEncoder(os.Stdout).Encode(tools)
-		return
-	}
+	s.AddPrompt(mcp.NewPrompt("memory__knowledge_extraction__mlc",
+		mcp.WithPromptDescription("Deep extraction of related entities and observations for a specific topic."),
+		mcp.WithArgument("topic", mcp.ArgumentDescription("The topic to research in the knowledge graph"), mcp.RequiredArgument()),
+	), func(ctx context.Context, request mcp.GetPromptRequest) (*mcp.GetPromptResult, error) {
+		topic := request.Params.Arguments["topic"]
+		return &mcp.GetPromptResult{
+			Description: "Knowledge extraction for " + topic,
+			Messages: []mcp.PromptMessage{
+				{
+					Role: mcp.RoleUser,
+					Content: mcp.TextContent{
+						Text: "You are a knowledge graph expert. Search the memory for all entities and observations related to '" + topic + "'. Construct a narrative summary that connects these pieces of information, highlighting key relationships and historical context stored in the graph.",
+					},
+				},
+			},
+		}, nil
+	})
+}
 
-	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
-		log.Fatalf("Server failed: %v", err)
+func runServer(s *server.MCPServer, transportType, addr string) {
+	switch transportType {
+	case "stdio":
+		log.Println("Memory MCP Server starting on stdio...")
+		if err := server.ServeStdio(s); err != nil {
+			log.Fatalf("Server failed: %v", err)
+		}
+	case "sse":
+		log.Printf("Memory MCP Server starting on SSE at %s...", addr)
+		sseServer := server.NewSSEServer(s)
+		if err := sseServer.Start(addr); err != nil {
+			log.Fatalf("SSE Server failed: %v", err)
+		}
+	default:
+		log.Fatalf("Unknown transport: %s", transportType)
 	}
 }

@@ -11,7 +11,7 @@ import (
 
 	"github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp/internal/domain/entity"
 	"github.com/hmsoft0815/mlcgo_mcp/mcp/d2mcp/internal/usecase"
-	"github.com/hmsoft0815/mlcartifact"
+	mlcartifact "github.com/hmsoft0815/mlcartifact/client"
 )
 
 // RenderArtifactHandler handles rendering a D2 source artifact to an SVG artifact.

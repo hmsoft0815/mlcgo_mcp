@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0f1829"/>
+    </linearGradient>
+    <linearGradient id="mapGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2540"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bg)"/>
+
+  <!-- Map panel (left 55%) -->
+  <rect x="40" y="40" width="660" height="640" rx="16" fill="url(#mapGrad)" stroke="#1e3a5f" stroke-width="1.5"/>
+
+  <!-- Map grid lines (latitude/longitude feel) -->
+  <g stroke="#1e3a5f" stroke-width="0.8" opacity="0.6">
+    <line x1="40" y1="200" x2="700" y2="200"/>
+    <line x1="40" y1="360" x2="700" y2="360"/>
+    <line x1="40" y1="520" x2="700" y2="520"/>
+    <line x1="200" y1="40" x2="200" y2="680"/>
+    <line x1="370" y1="40" x2="370" y2="680"/>
+    <line x1="540" y1="40" x2="540" y2="680"/>
+  </g>
+
+  <!-- OSM-style roads -->
+  <!-- Main highway (thick, cyan) -->
+  <path d="M 40 390 Q 180 360 280 380 Q 380 400 480 370 Q 560 350 700 345"
+        fill="none" stroke="#06b6d4" stroke-width="5" stroke-linecap="round" opacity="0.9" filter="url(#glow)"/>
+  <!-- Secondary road -->
+  <path d="M 40 490 Q 150 470 250 460 Q 350 450 430 420 Q 510 395 700 345"
+        fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  <!-- Tertiary roads -->
+  <path d="M 200 40 Q 220 150 240 250 Q 255 320 280 380"
+        fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 370 40 Q 375 160 370 280 Q 368 340 370 360 Q 372 400 370 500 Q 368 600 370 680"
+        fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M 540 40 Q 535 180 530 300 Q 528 370 480 370"
+        fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <!-- Minor roads -->
+  <path d="M 100 560 Q 200 540 300 530 Q 400 520 480 490"
+        fill="none" stroke="#334155" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 100 620 Q 240 610 340 590 Q 420 575 500 560"
+        fill="none" stroke="#334155" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 120 90 Q 160 160 200 200"
+        fill="none" stroke="#334155" stroke-width="1.5" opacity="0.6"/>
+  <path d="M 420 90 Q 430 140 430 200 Q 430 260 420 300"
+        fill="none" stroke="#334155" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Building blocks (city feel) -->
+  <g fill="#1e3050" stroke="#243860" stroke-width="1" opacity="0.8">
+    <rect x="60"  y="60"  width="55" height="40" rx="2"/>
+    <rect x="125" y="60"  width="35" height="40" rx="2"/>
+    <rect x="60"  y="110" width="40" height="30" rx="2"/>
+    <rect x="110" y="110" width="50" height="30" rx="2"/>
+    <rect x="60"  y="420" width="60" height="45" rx="2"/>
+    <rect x="60"  y="475" width="45" height="35" rx="2"/>
+    <rect x="115" y="420" width="40" height="55" rx="2"/>
+    <rect x="400" y="60"  width="50" height="40" rx="2"/>
+    <rect x="460" y="60"  width="30" height="40" rx="2"/>
+    <rect x="405" y="110" width="45" height="30" rx="2"/>
+    <rect x="560" y="420" width="55" height="45" rx="2"/>
+    <rect x="625" y="420" width="35" height="45" rx="2"/>
+    <rect x="560" y="475" width="45" height="35" rx="2"/>
+  </g>
+
+  <!-- Green areas (parks) -->
+  <rect x="240" y="60"  width="110" height="110" rx="8" fill="#14532d" opacity="0.4"/>
+  <rect x="430" y="400" width="80"  height="70"  rx="6" fill="#14532d" opacity="0.35"/>
+
+  <!-- Water area -->
+  <ellipse cx="600" cy="580" rx="70" ry="50" fill="#1e3a5f" opacity="0.7"/>
+  <ellipse cx="600" cy="580" rx="70" ry="50" fill="none" stroke="#0284c7" stroke-width="1" opacity="0.5"/>
+
+  <!-- Location pin -->
+  <g filter="url(#softglow)">
+    <circle cx="370" cy="360" r="18" fill="#06b6d4" opacity="0.25"/>
+    <circle cx="370" cy="360" r="10" fill="#06b6d4"/>
+    <circle cx="370" cy="360" r="4"  fill="#fff"/>
+    <!-- Pin tail -->
+    <line x1="370" y1="370" x2="370" y2="395" stroke="#06b6d4" stroke-width="3" stroke-linecap="round"/>
+    <line x1="362" y1="390" x2="378" y2="390" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <!-- Coordinate labels -->
+  <g font-family="monospace" font-size="11" fill="#1e3a5f" opacity="0.7">
+    <text x="48"  y="198">48.2°N</text>
+    <text x="48"  y="358">48.1°N</text>
+    <text x="48"  y="518">48.0°N</text>
+    <text x="198" y="680">11.5°E</text>
+    <text x="368" y="680">11.6°E</text>
+    <text x="538" y="680">11.7°E</text>
+  </g>
+
+  <!-- Right panel: MCP server info -->
+  <!-- Panel background -->
+  <rect x="720" y="40" width="520" height="640" rx="16" fill="#0d1424" stroke="#1e3a5f" stroke-width="1.5"/>
+
+  <!-- Title area -->
+  <text x="760" y="110" font-family="monospace" font-size="13" fill="#06b6d4" letter-spacing="2" opacity="0.9">// MCP SERVER</text>
+  <text x="760" y="160" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="#f1f5f9">OpenStreetMap</text>
+  <text x="760" y="200" font-family="system-ui, sans-serif" font-size="28" font-weight="400" fill="#94a3b8">MCP</text>
+
+  <!-- Divider -->
+  <line x1="760" y1="225" x2="1200" y2="225" stroke="#1e3a5f" stroke-width="1"/>
+
+  <!-- Tools list -->
+  <g font-family="monospace" font-size="14" fill="#94a3b8">
+    <text x="760" y="265" fill="#64748b" font-size="11" letter-spacing="1">TOOLS</text>
+
+    <!-- Tool rows with colored dots -->
+    <circle cx="772" cy="292" r="4" fill="#06b6d4"/>
+    <text x="788" y="297" fill="#e2e8f0">geocode_address</text>
+    <text x="990" y="297" fill="#475569" font-size="11">Nominatim</text>
+
+    <circle cx="772" cy="326" r="4" fill="#06b6d4"/>
+    <text x="788" y="331" fill="#e2e8f0">reverse_geocode</text>
+    <text x="990" y="331" fill="#475569" font-size="11">Nominatim</text>
+
+    <circle cx="772" cy="360" r="4" fill="#0ea5e9"/>
+    <text x="788" y="365" fill="#e2e8f0">get_route</text>
+    <text x="990" y="365" fill="#475569" font-size="11">OSRM</text>
+
+    <circle cx="772" cy="394" r="4" fill="#0ea5e9"/>
+    <text x="788" y="399" fill="#e2e8f0">find_nearby_places</text>
+    <text x="990" y="399" fill="#475569" font-size="11">Overpass</text>
+
+    <circle cx="772" cy="428" r="4" fill="#7c3aed"/>
+    <text x="788" y="433" fill="#e2e8f0">find_schools</text>
+    <text x="990" y="433" fill="#475569" font-size="11">Overpass</text>
+
+    <circle cx="772" cy="462" r="4" fill="#7c3aed"/>
+    <text x="788" y="467" fill="#e2e8f0">find_ev_charging_stations</text>
+    <text x="990" y="467" fill="#475569" font-size="11">Overpass</text>
+
+    <circle cx="772" cy="496" r="4" fill="#7c3aed"/>
+    <text x="788" y="501" fill="#e2e8f0">find_parking</text>
+    <text x="990" y="501" fill="#475569" font-size="11">Overpass</text>
+
+    <circle cx="772" cy="530" r="4" fill="#059669"/>
+    <text x="788" y="535" fill="#e2e8f0">search_category</text>
+    <text x="990" y="535" fill="#475569" font-size="11">Overpass</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="760" y1="560" x2="1200" y2="560" stroke="#1e3a5f" stroke-width="1"/>
+
+  <!-- Transport badges -->
+  <g font-family="monospace" font-size="11">
+    <rect x="760" y="575" width="60"  height="22" rx="4" fill="#1e3a5f"/>
+    <text x="772" y="590" fill="#06b6d4">stdio</text>
+    <rect x="830" y="575" width="46"  height="22" rx="4" fill="#1e3a5f"/>
+    <text x="840" y="590" fill="#06b6d4">SSE</text>
+    <rect x="886" y="575" width="32"  height="22" rx="4" fill="#1e3a5f"/>
+    <text x="893" y="590" fill="#94a3b8">Go</text>
+    <rect x="928" y="575" width="46"  height="22" rx="4" fill="#1e3a5f"/>
+    <text x="935" y="590" fill="#94a3b8">MIT</text>
+  </g>
+
+  <!-- Single binary highlight box -->
+  <rect x="760" y="615" width="460" height="50" rx="8" fill="#0c2a1a" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="782" y="635" font-family="monospace" font-size="11" fill="#16a34a" letter-spacing="1">✓ SINGLE BINARY</text>
+  <text x="782" y="652" font-family="monospace" font-size="11" fill="#4ade80">No Python. No Node.js. No dependencies.</text>
+
+  <!-- OSM attribution -->
+  <text x="1150" y="696" font-family="system-ui" font-size="10" fill="#1e3a5f" text-anchor="middle">© OpenStreetMap contributors</text>
+</svg>

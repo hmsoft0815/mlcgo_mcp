@@ -2,7 +2,7 @@ id: "openstreetmap-mcp"
 name: "OpenStreetMap MCP"
 version: "1.0.0"
 status: "stable"
-category: "Infrastructure"
+category: "MCP Tools"
 license: "MIT"
 platforms: [Windows, macOS, Linux]
 slogan_en: "OpenStreetMap for your LLM — single Go binary, no Python, no Node.js required."

@@ -1,3 +1,6 @@
 [submodule ".mlcai"]
 	path = .mlcai
 	url = mlc@nas.local:/var/services/homes/mlc/repositories/dochub/mlcgo-mcp-mlcai.git
+[submodule "mcp/openstreetmap_mcp/mlcprodweb"]
+	path = mcp/openstreetmap_mcp/mlcprodweb
+	url = mlc@nas.local:/volume1/homes/mlc/repositories/product/openstreetmap-mcp.git

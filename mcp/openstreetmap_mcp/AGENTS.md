@@ -1,20 +1,32 @@
 <!-- mlc-dochub:begin — auto-managed, do not edit between these markers -->
-## MLC Doc Hub — mlcgo-mcp
+## MLC Doc Hub — mlcgo-mcp / openstreetmap-mcp
 
-Structured documentation lives in `.mlcai/`, maintained through the
-`mlc-dochub` MCP server.
+**You are working in sub-project** `openstreetmap-mcp` of project `mlcgo-mcp`.
+Every `mcp__mlc-dochub__*` call for this directory must pass
+`project_id="mlcgo-mcp"` **together with** `sub_id="openstreetmap-mcp"`.
 
-- **Project ID:** `mlcgo-mcp` — mlcgo_mcp — Go MCP Server Hub
-- **Source directory:** `/mnt/data2tb/mlcgo_mcp` (read source files with native Read —
-  the MCP tools only touch `.mlcai/`)
-- **Sub-projects:** `openstreetmap-mcp` — pass `sub_id` for those.
+- **Source directory** (this cwd): `/mnt/data2tb/mlcgo_mcp/mcp/openstreetmap_mcp`
+- **Parent project source:** `/mnt/data2tb/mlcgo_mcp`
+
+The parent project has its own `.mlcai/` at `../../.mlcai/` — do not
+write there unless you mean the parent. Sub-specific docs live at
+`../../.mlcai/openstreetmap-mcp/`.
+
 
 ### Existing docs
 
 Read any of these directly (native Read is fine) to gather context before you work:
 
-- `.mlcai/INTEGRATION.md` — How this project fits into the larger system
-- `.mlcai/TECH_STACK.md` — Stack & dependencies
+- `../../.mlcai/openstreetmap-mcp/PRODUCT.md` — Product marketing page pointer (submodule meta)
+- `../../.mlcai/INTEGRATION.md` — How this project fits into the larger system
+- `../../.mlcai/TECH_STACK.md` — Stack & dependencies
+
+### Recommended, not yet created
+
+- `../../.mlcai/openstreetmap-mcp/INTEGRATION.md` — How this project fits into the larger system
+- `../../.mlcai/openstreetmap-mcp/TECH_STACK.md` — Stack & dependencies
+- `../../.mlcai/openstreetmap-mcp/API_CONTRACT.md` — API contract / endpoints
+- `../../.mlcai/openstreetmap-mcp/DECISION_LOG.md` — Architecture decisions
 
 ### The rules themselves
 
@@ -49,3 +61,14 @@ them, this section is your copy:
 `mcp__mlc-dochub__get_project_context` returns this project's metadata and style
 guide; call it once before creating new docs.
 <!-- mlc-dochub:end -->
+
+## 🧠 Codebase Memory & Intelligence Engine (`cbm`)
+
+Dieses Projekt unterstützt den `codebase-memory` MCP-Server (`cbm-server`) für blitzschnelle strukturelle Codebase-Navigation (<50µs In-Memory Graph, Tree-Sitter ASTs, Call-Hierarchien und Qdrant-Vektorsuche).
+
+### 🛠️ Empfohlener Agent-Workflow:
+1. **Orientierung bei Session-Start:** Rufe `get_repo_map` auf, um die Paketstruktur, Interfaces und Monorepo-Subprojekte kompakt (<400 Tokens) zu erfassen.
+2. **Falls Repository noch nicht indexiert ist:** Rufe einmalig `index_repository(path=".")` auf.
+3. **Funktions- & Aufrufketten analysieren:** Nutze `get_callers`, `get_callees` oder `trace_call_path` anstelle manueller Datei-Suchen.
+4. **Vor Refactorings / Änderungen:** Prüfe Abhängigkeiten mit `simulate_refactoring` oder `get_impact_radius`.
+5. **Git Diff Impact:** Nutze `detect_changes`, um den Blast Radius ungespeicherter Änderungen zu analysieren.

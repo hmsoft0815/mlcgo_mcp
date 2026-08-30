@@ -17,12 +17,12 @@ type OSRMResponse struct {
 
 // OSRMRoute represents a calculated route between points, including distance and duration.
 type OSRMRoute struct {
-	Geometry   any             `json:"geometry"`
-	Legs       []OSRMRouteLeg  `json:"legs"`
-	WeightName string          `json:"weight_name"`
-	Weight     float64         `json:"weight"`
-	Duration   float64         `json:"duration"`
-	Distance   float64         `json:"distance"`
+	Geometry   any            `json:"geometry"`
+	Legs       []OSRMRouteLeg `json:"legs"`
+	WeightName string         `json:"weight_name"`
+	Weight     float64        `json:"weight"`
+	Duration   float64        `json:"duration"`
+	Distance   float64        `json:"distance"`
 }
 
 // OSRMRouteLeg represents a segment of a route between two waypoints, containing multiple steps.

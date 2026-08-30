@@ -1,0 +1,114 @@
+version: '3'
+
+# Replaces the Makefile. Same targets, plus the version stamp and a deploy
+# step — the product page has linked four binaries since it existed, and there
+# was never a way to put them on the server.
+
+vars:
+  BINARY: osm-mcp
+  BIN_DIR: bin
+  MODULE: github.com/mlechner/mlc_toolretrieval/openstreetmap_mcp
+  VERSION:
+    sh: cat VERSION
+  LDFLAGS: -X main.version={{.VERSION}}
+  # This module sits in the go.work of mlcgo_mcp. GOWORK=off keeps a build
+  # from pulling in its siblings, which is why every build line carries it.
+  GOFLAGS_ENV: GOWORK=off
+  VPS_HOST: mlc@mlcgo.eu
+  VPS_DIR: /var/www/html/downloads/openstreetmap-mcp
+
+tasks:
+  default:
+    desc: List the available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  build:
+    desc: Build for this machine
+    cmds:
+      - mkdir -p {{.BIN_DIR}}
+      - "{{.GOFLAGS_ENV}} go build -ldflags \"{{.LDFLAGS}}\" -o {{.BIN_DIR}}/{{.BINARY}} ./cmd/server"
+
+  build:linux:
+    desc: Cross-compile for Linux amd64
+    cmds:
+      - mkdir -p {{.BIN_DIR}}
+      - "{{.GOFLAGS_ENV}} GOOS=linux GOARCH=amd64 go build -ldflags \"{{.LDFLAGS}}\" -o {{.BIN_DIR}}/{{.BINARY}}-linux-amd64 ./cmd/server"
+
+  build:windows:
+    desc: Cross-compile for Windows amd64
+    cmds:
+      - mkdir -p {{.BIN_DIR}}
+      - "{{.GOFLAGS_ENV}} GOOS=windows GOARCH=amd64 go build -ldflags \"{{.LDFLAGS}}\" -o {{.BIN_DIR}}/{{.BINARY}}-windows-amd64.exe ./cmd/server"
+
+  build:macos:
+    desc: Cross-compile for macOS, both architectures
+    cmds:
+      - mkdir -p {{.BIN_DIR}}
+      - "{{.GOFLAGS_ENV}} GOOS=darwin GOARCH=arm64 go build -ldflags \"{{.LDFLAGS}}\" -o {{.BIN_DIR}}/{{.BINARY}}-macos-arm64 ./cmd/server"
+      - "{{.GOFLAGS_ENV}} GOOS=darwin GOARCH=amd64 go build -ldflags \"{{.LDFLAGS}}\" -o {{.BIN_DIR}}/{{.BINARY}}-macos-amd64 ./cmd/server"
+
+  build:all:
+    desc: Cross-compile every published target
+    deps: [build:linux, build:windows, build:macos]
+
+  dev:
+    desc: Build and run the server
+    cmds:
+      - task: build
+      - "./{{.BIN_DIR}}/{{.BINARY}} {{.CLI_ARGS}}"
+
+  test:
+    desc: Run the tests
+    cmds:
+      - "{{.GOFLAGS_ENV}} go test ./..."
+
+  lint:
+    desc: gofmt check and go vet
+    cmds:
+      - |
+        unformatted=$(gofmt -l . | grep -v '^$' || true)
+        if [ -n "$unformatted" ]; then
+          echo "gofmt would change:"; echo "$unformatted"; exit 1
+        fi
+        echo "gofmt: clean"
+      - "{{.GOFLAGS_ENV}} go vet ./..."
+
+  clean:
+    desc: Remove build output
+    cmds:
+      - rm -rf {{.BIN_DIR}}
+
+  dropzone:
+    desc: Copy the built binaries to the dropzone for testing
+    deps: [build:all]
+    cmds:
+      - mkdir -p /mnt/data2tb/dropzone
+      - |
+        for f in {{.BINARY}}-linux-amd64 {{.BINARY}}-windows-amd64.exe \
+                 {{.BINARY}}-macos-arm64 {{.BINARY}}-macos-amd64; do
+          cp "{{.BIN_DIR}}/$f" "/mnt/data2tb/dropzone/$f"
+          echo "  → /mnt/data2tb/dropzone/$f"
+        done
+
+  deploy:
+    desc: "PUBLISH: upload the four binaries the product page links"
+    deps: [build:all]
+    cmds:
+      # The names are not free — mlcprodweb/meta.yaml links exactly these, and
+      # a mismatch is a 404 nobody notices.
+      - |
+        set -e
+        for f in {{.BINARY}}-linux-amd64 {{.BINARY}}-windows-amd64.exe \
+                 {{.BINARY}}-macos-arm64 {{.BINARY}}-macos-amd64; do
+          [ -f "{{.BIN_DIR}}/$f" ] || { echo "missing: {{.BIN_DIR}}/$f"; exit 1; }
+        done
+        ssh -o BatchMode=yes {{.VPS_HOST}} "mkdir -p {{.VPS_DIR}}"
+        rsync -az --timeout=30 -e 'ssh -o BatchMode=yes -o ConnectTimeout=10' \
+          {{.BIN_DIR}}/{{.BINARY}}-linux-amd64 \
+          {{.BIN_DIR}}/{{.BINARY}}-windows-amd64.exe \
+          {{.BIN_DIR}}/{{.BINARY}}-macos-arm64 \
+          {{.BIN_DIR}}/{{.BINARY}}-macos-amd64 \
+          {{.VPS_HOST}}:{{.VPS_DIR}}/
+        echo "✓ https://mlcgo.eu/downloads/openstreetmap-mcp/"

@@ -1,5 +1,8 @@
 # mlcgo_mcp — Go MCP Server Hub
 
+> **[mlcgo.eu](https://mlcgo.eu)** — Werkzeuge, Bibliotheken und Handbücher
+
+
 Eine Sammlung von **Model Context Protocol (MCP)** Servern, geschrieben in Go. Dieses Repository dient als zentraler Einstiegspunkt für spezialisierte Tools, die für KI-Agenten entwickelt wurden.
 
 Copyright (c) 2026 Michael Lechner. Alle Rechte vorbehalten.

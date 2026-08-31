@@ -62,6 +62,12 @@ go build -o d2mcp ./mcp/d2mcp
 ./d2mcp -transport=stdio
 ```
 
+## Referenz
+
+Das **[MCP-Handbuch](https://mlcgo.eu/books/mcp-handbuch/)** erklärt das Model Context Protocol von Grund auf —
+Tools, Resources, Prompts, Transporte, Sicherheit und das Artifact-Pattern.
+Auf Deutsch und Englisch.
+
 ---
 
 ## Lizenz

@@ -29,3 +29,11 @@ Wird als Teil des Hauptprojekts gebaut:
 ```bash
 task build
 ```
+
+---
+
+## Referenz
+
+Das **[MCP-Handbuch](https://mlcgo.eu/books/mcp-handbuch/)** erklärt das Model Context Protocol von Grund auf —
+Tools, Resources, Prompts, Transporte, Sicherheit und das Artifact-Pattern.
+Auf Deutsch und Englisch.

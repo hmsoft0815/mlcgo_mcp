@@ -52,5 +52,13 @@ make build
 - `--sse-addr`: Address for SSE server (default: `:8080`)
 - `--osm-rate-limit`: Minimum seconds to wait between OSM API calls (default: `5`)
 
+## Reference
+
+The **[MCP Handbook](https://mlcgo.eu/books/mcp-handbuch/)** explains the Model Context Protocol from the ground
+up — tools, resources, prompts, transports, security and the artifact pattern.
+Available in English and German.
+
+---
+
 ## License
 MIT

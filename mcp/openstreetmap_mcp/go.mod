@@ -2,6 +2,8 @@ module github.com/mlechner/mlc_toolretrieval/openstreetmap_mcp
 
 go 1.24.2
 
+toolchain go1.25.13
+
 require github.com/mark3labs/mcp-go v0.44.1
 
 require (

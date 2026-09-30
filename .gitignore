@@ -11,3 +11,6 @@ osm-mcp
 # Go binaries in subdirs
 **/bin/*
 **/osm-mcp
+
+# lokale MCP-Konfiguration (dochub-cli agent-rules)
+.mcp.json
